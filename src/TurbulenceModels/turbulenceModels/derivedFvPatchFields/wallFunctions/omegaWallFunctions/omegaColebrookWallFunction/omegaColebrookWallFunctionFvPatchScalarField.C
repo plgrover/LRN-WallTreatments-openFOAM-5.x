@@ -185,7 +185,6 @@ void omegaColebrookWallFunctionFvPatchScalarField::calculateTurbulenceFields
     forAll(cornerWeights_, patchi) {
         if (!cornerWeights_[patchi].empty()) {
             omegaColebrookWallFunctionFvPatchScalarField& opf = omegaPatch(patchi);
-
             opf == scalarField(omega0, opf.patch().faceCells());
         }
     }
@@ -233,7 +232,8 @@ void omegaColebrookWallFunctionFvPatchScalarField::calculate
         scalar nueff = nutw[facei] + nuw[facei];
         scalar ustar = sqrt(nueff*magGradUw[facei]);
 
-        // Calculate kr+ - EQ (1) in Aupoix 2015
+        // Calculate kr+ - the non-dimensional roughness height
+        // EQ (1) in Aupoix 2014
         scalar krPlus = kr_*ustar/nuw[facei];
 
         if (krPlus < 1.5) {
@@ -270,9 +270,9 @@ void omegaColebrookWallFunctionFvPatchScalarField::calculate
             }
         } else {
             // Rough wall case
-            // Calculate the omega in wall units Eq. 25 in Aupoix (2015)
-            scalar omegaPlus = (300.0/sqr(krPlus))/tanh(15.0/(4.0*krPlus));
-            omegaPlus += (191./krPlus)*(1-exp(-krPlus / 250.));
+            // Calculate the omega in wall units Eq. 25 in Aupoix (2014)
+            scalar omegaPlus = (300.0/sqr(krPlus))/tanh(15.0/(4.0*krPlus))
+                + (191./krPlus)*(1 - exp(-krPlus/250.));
             omega0[celli] = omegaPlus * sqr(ustar) / nuw[facei];
 
             G0[celli] +=

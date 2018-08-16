@@ -62,6 +62,7 @@ Usage
 
 See also
     Foam::fixedInternalValueFvPatchField
+    Foam::omegaWallFunctionFvPatchScalarField
     Foam::epsilonWallFunctionFvPatchScalarField
 
 SourceFiles
@@ -117,7 +118,7 @@ protected:
     //- kr Nikuradse roughness coefficient
     scalar kr_;
 
-    //- Betak_
+    //- Betak_constant of the k-ω model
     scalar Betak_;
 
     //- Local copy of turbulence G field

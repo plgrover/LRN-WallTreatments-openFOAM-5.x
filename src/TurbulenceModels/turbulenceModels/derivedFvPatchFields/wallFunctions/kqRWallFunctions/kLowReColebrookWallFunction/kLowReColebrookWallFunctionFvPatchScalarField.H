@@ -60,7 +60,7 @@ Usage
     \endverbatim
 
 See also
-    Foam::fixedValueFvPatchField
+    Foam::kLowReWallFunctionFvPatchScalarField
 
 SourceFiles
     kLowReColebrookWallFunctionFvPatchScalarField.C
@@ -107,7 +107,7 @@ protected:
     //- kr Nikuradse roughness coefficient
     scalar kr_;
 
-    //- Betak_
+    //- Betak_ constant of the k-ω model
     scalar Betak_;
 
     // Protected Member Functions
@@ -183,7 +183,6 @@ public:
                    new kLowReColebrookWallFunctionFvPatchScalarField(*this, iF)
                );
     }
-
 
     // Member functions
 

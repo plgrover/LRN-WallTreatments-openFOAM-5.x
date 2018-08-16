@@ -80,7 +80,6 @@ kLowReColebrookWallFunctionFvPatchScalarField::kLowReColebrookWallFunctionFvPatc
     E_(9.8),
     Ceps2_(1.9),
     yPlusLam_(yPlusLam(kappa_, E_)),
-    // New Variables
     Betak_(0.09),
     kr_(0.002)
 {
@@ -176,16 +175,14 @@ void kLowReColebrookWallFunctionFvPatchScalarField::updateCoeffs()
 
     const label patchi = patch().index();
 
-    Info<< "kLowReColebrookWallFunctionFvPatchScalarField:updateCoeffs()" << nl << endl;
-
     const turbulenceModel& turbModel = db().lookupObject<turbulenceModel>
-                                       (
-                                           IOobject::groupName
-                                           (
-                                                   turbulenceModel::propertiesName,
-                                                   internalField().group()
-                                           )
-                                       );
+                                    (
+                                        IOobject::groupName
+                                        (
+                                            turbulenceModel::propertiesName,
+                                            internalField().group()
+                                        )
+                                    );
     const scalarField& y = turbModel.y()[patchi];
 
     const tmp<volScalarField> tk = turbModel.k();
@@ -200,11 +197,9 @@ void kLowReColebrookWallFunctionFvPatchScalarField::updateCoeffs()
     const volScalarField& nut = tnut();
     const scalarField& nutw = nut.boundaryField()[patchi];
 
-    // Get the gradient at the wall
+    // Get the velocity gradient at the wall
     const fvPatchVectorField& Uw = turbModel.U().boundaryField()[patchi];
     const scalarField magGradUw(mag(Uw.snGrad()));
-
-    // const scalar Cmu25 = pow025(Cmu_);
 
     scalarField& kw = *this;
 
@@ -213,16 +208,19 @@ void kLowReColebrookWallFunctionFvPatchScalarField::updateCoeffs()
         label celli = patch().faceCells()[facei];
         scalar nueff = nutw[facei] + nuw[facei];
         scalar ustar = sqrt(nueff*magGradUw[facei]);
-        // Info<< "krPlus: " << krPlus << "ustar: " << ustar << nl <<endl;
+
         if (ustar > ROOTVSMALL) {
-            // Calculate kr+
+            // Calculate kr+ - the non-dimensional roughness height
+            // EQ (1) in Aupoix 2014
             scalar krPlus = kr_*ustar/nuw[facei];
             
-            scalar F1 = ( ( log(krPlus/30.0) / log(10.) ) + 1.0 - tanh(krPlus/125.) ) * tanh(krPlus/125.);
+            // Calculate the non-dimensional turbulent kinetic energy
+            // Eq. 25 in Aupooix (2016)
+            scalar kPlus = (1.0/sqrt(Betak_))
+                *tanh(((log(krPlus/30.0)/log(10.)) + 1.0 
+                - tanh(krPlus/125.))*tanh(krPlus/125.));
 
-            scalar kPlus = (1.0/sqrt(Betak_)) * tanh(F1);
-
-            kw[facei] = max( kPlus * (sqr(ustar) ), 0.0) ;
+            kw[facei] = max(kPlus*(sqr(ustar)), 0.0);
         }
     }
 
