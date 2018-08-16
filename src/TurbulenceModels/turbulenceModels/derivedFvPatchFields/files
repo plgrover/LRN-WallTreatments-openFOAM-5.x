@@ -1,7 +1,0 @@
-/* Wall functions */
-
-wallFunctions/kqRWallFunctions/kLowReColebrookWallFunction/kLowReColebrookWallFunctionFvPatchScalarField.C
-wallFunctions/omegaWallFunctions/omegaColebrookWallFunction/omegaColebrookWallFunctionFvPatchScalarField.C
-
-LIB = $(FOAM_USER_LIBBIN)/libmyWallFunctions
-
