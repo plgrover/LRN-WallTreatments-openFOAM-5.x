@@ -1,8 +1,17 @@
 kqRWallFunctions = wallFunctions/kqRWallFunctions
 $(kqRWallFunctions)/kLowReColebrookWallFunction/kLowReColebrookWallFunctionFvPatchScalarField.C
+$(kqRWallFunctions)/kLowReNikuradseWallFunction/kLowReNikuradseWallFunctionFvPatchScalarField.C
+
 
 OmegaWallFunctions = wallFunctions/omegaWallFunctions
 $(OmegaWallFunctions)/omegaColebrookWallFunction/omegaColebrookWallFunctionFvPatchScalarField.C
+$(OmegaWallFunctions)/omegaNikuradseWallFunction/omegaNikuradseWallFunctionFvPatchScalarField.C
+
+
+
+
+
+
 
 
 LIB = $(FOAM_USER_LIBBIN)/libmyWallFunctions
