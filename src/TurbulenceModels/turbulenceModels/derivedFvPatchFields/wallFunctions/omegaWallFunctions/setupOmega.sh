@@ -1,0 +1,15 @@
+clear
+
+cp -r $FOAM_SRC/TurbulenceModels/turbulenceModels/derivedFvPatchFields/wallFunctions/omegaWallFunctions/omegaWallFunction .
+
+mv omegaWallFunction omegaColebrookWallFunction
+cd omegaColebrookWallFunction
+rm *.dep
+
+mv omegaWallFunctionFvPatchScalarField.C omegaColebrookWallFunctionFvPatchScalarField.C
+mv omegaWallFunctionFvPatchScalarField.H omegaColebrookWallFunctionFvPatchScalarField.H
+
+sed -i s/omegaWallFunction/omegaColebrookWallFunction/g omegaColebrookWallFunctionFvPatchScalarField.C
+sed -i s/omegaWallFunction/omegaColebrookWallFunction/g omegaColebrookWallFunctionFvPatchScalarField.H
+
+echo "done"
