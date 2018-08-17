@@ -236,7 +236,8 @@ void omegaNikuradseWallFunctionFvPatchScalarField::calculate
         // EQ (1) in Aupoix 2014
         scalar krPlus = kr_*ustar/nuw[facei];
 
-        if (krPlus < 1.5) {
+        if (krPlus < 1.5) 
+        {
             // Smooth wall case
             const scalar omegaVis = 6*nuw[facei]/(beta1_*sqr(y[facei]));
             const scalar omegaLog = sqrt(k[celli])/(Cmu25*kappa_*y[facei]);
@@ -248,12 +249,15 @@ void omegaNikuradseWallFunctionFvPatchScalarField::calculate
             // For backward-compatibility the blending method is provided as an
             // option
 
-            if (blended_) {
+            if (blended_) 
+            {
                 omega0[celli] += w*sqrt(sqr(omegaVis) + sqr(omegaLog));
             }
 
-            if (yPlus > yPlusLam_) {
-                if (!blended_) {
+            if (yPlus > yPlusLam_) 
+            {
+                if (!blended_) 
+                {
                     omega0[celli] += w*omegaLog;
                 }
 
@@ -263,12 +267,17 @@ void omegaNikuradseWallFunctionFvPatchScalarField::calculate
                     *magGradUw[facei]
                     *Cmu25*sqrt(k[celli])
                     /(kappa_*y[facei]);
-            } else {
-                if (!blended_) {
+            } 
+            else 
+            {
+                if (!blended_) 
+                {
                     omega0[celli] += w*omegaVis;
                 }
             }
-        } else {
+         } 
+         else 
+         {
             // Rough wall case
             // Calculate the omega in wall units Eq. 24 in Aupoix (2014)
             scalar omegaPlus = (400000.0/pow(krPlus,4.))
@@ -277,12 +286,12 @@ void omegaNikuradseWallFunctionFvPatchScalarField::calculate
 
             omega0[celli] = omegaPlus * sqr(ustar) / nuw[facei];
 
-            G0[celli] +=
+            /*G0[celli] +=
                 w
                 *(nutw[facei] + nuw[facei])
                 *magGradUw[facei]
                 *Cmu25*sqrt(k[celli])
-                /(kappa_*y[facei]);
+                /(kappa_*y[facei]);*/
         }
     }
 }
