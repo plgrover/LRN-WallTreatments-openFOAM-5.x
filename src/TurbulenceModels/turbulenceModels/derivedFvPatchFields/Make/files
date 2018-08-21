@@ -6,13 +6,7 @@ $(kqRWallFunctions)/kLowReNikuradseWallFunction/kLowReNikuradseWallFunctionFvPat
 OmegaWallFunctions = wallFunctions/omegaWallFunctions
 $(OmegaWallFunctions)/omegaColebrookWallFunction/omegaColebrookWallFunctionFvPatchScalarField.C
 $(OmegaWallFunctions)/omegaNikuradseWallFunction/omegaNikuradseWallFunctionFvPatchScalarField.C
-
-
-
-
-
-
-
+$(OmegaWallFunctions)/omegaWilcoxWallFunction/omegaWilcoxWallFunctionFvPatchScalarField.C
 
 LIB = $(FOAM_USER_LIBBIN)/libmyWallFunctions
 
