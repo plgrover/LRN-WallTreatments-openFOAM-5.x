@@ -274,13 +274,6 @@ void omegaColebrookWallFunctionFvPatchScalarField::calculate
             scalar omegaPlus = (300.0/sqr(krPlus))/tanh(15.0/(4.0*krPlus))
                 + (191./krPlus)*(1 - exp(-krPlus/250.));
             omega0[celli] = omegaPlus * sqr(ustar) / nuw[facei];
-
-            /*G0[celli] +=
-                w
-                *(nutw[facei] + nuw[facei])
-                *magGradUw[facei]
-                *Cmu25*sqrt(k[celli])
-                /(kappa_*y[facei]);*/
         }
     }
 }

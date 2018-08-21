@@ -278,20 +278,13 @@ void omegaNikuradseWallFunctionFvPatchScalarField::calculate
          } 
          else 
          {
-            // Rough wall case
+            // Rough wall case.
             // Calculate the omega in wall units Eq. 24 in Aupoix (2014)
             scalar omegaPlus = (400000.0/pow(krPlus,4.))
                 /tanh(10000.0/(3.0*pow(krPlus,3)))
                 + (70./krPlus)*(1 - exp(-krPlus/300.));
 
-            omega0[celli] = omegaPlus * sqr(ustar) / nuw[facei];
-
-            /*G0[celli] +=
-                w
-                *(nutw[facei] + nuw[facei])
-                *magGradUw[facei]
-                *Cmu25*sqrt(k[celli])
-                /(kappa_*y[facei]);*/
+            omega0[celli] = omegaPlus*sqr(ustar)/nuw[facei];
         }
     }
 }
